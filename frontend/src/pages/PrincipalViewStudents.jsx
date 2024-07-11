@@ -63,7 +63,7 @@ const PrincipalViewStudents = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem("token")}`
-                },
+                }},{
                 params: { regno, name, curryear, currterm, classid }
             });
 
