@@ -14,16 +14,18 @@ const jwt = require('jsonwebtoken')
 
 const editTeacher = async (req, res) => {
     const id = req.params.id;
+    console.log(id);
     const { teacherId, teacherName, email, teacherMNo, classId } = req.body;
 
     try {
+        const existedTeacher=await teacherModel.findById(id);
         const updatedTeacher = await teacherModel.findByIdAndUpdate(
             id,
             { teacherId, teacherName, email, teacherMNo, classId },
             { new: true }
         );
-
-        if (!updatedTeacher) {
+        const updateUser= await userModel.findOneAndUpdate({"id": existedTeacher.teacherId},{"id" : teacherId});
+        if (!updatedTeacher || !updateUser) {
             return res.status(404).json({ msg: 'Teacher not found' });
         }
 
